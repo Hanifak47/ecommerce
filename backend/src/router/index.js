@@ -1,8 +1,8 @@
 import { createRouter, createWebHashHistory, createWebHistory } from "vue-router";
 import Dashboard from "../views/Dashboard.vue";
 import Login from "../views/Login.vue";
-import RequestPassword from "../views/RequestPassword";
-import ResetPassword from "../views/ResetPassword";
+import RequestPassword from "../views/RequestPassword.vue";
+import ResetPassword from "../views/ResetPassword.vue";
 
 // definisikan routenya baik path (url get) maupun nama dan komponen tujuan nya
 const routes = [
