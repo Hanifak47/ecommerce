@@ -1,7 +1,10 @@
 import { createRouter, createWebHashHistory, createWebHistory } from "vue-router";
 import Dashboard from "../views/Dashboard.vue";
 import Login from "../views/Login.vue";
+import RequestPassword from "../views/RequestPassword";
+import ResetPassword from "../views/ResetPassword";
 
+// definisikan routenya baik path (url get) maupun nama dan komponen tujuan nya
 const routes = [
     {
         path: '/dashboard',
@@ -11,6 +14,16 @@ const routes = [
         path: '/login',
         name: 'login',
         component: Login
+    },
+    {
+        path: '/request-password',
+        name: 'requestPassword',
+        component: RequestPassword
+    },
+    {
+        path: '/reset-password/:token',
+        name: 'resetPassword',
+        component: ResetPassword
     }
 ];
 const router = createRouter({
