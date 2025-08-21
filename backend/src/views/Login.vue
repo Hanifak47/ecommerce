@@ -1,6 +1,6 @@
 <template>
   <GuestLayout title="Sign in to your account">
-    <form class="mt-8 space-y-6" action="#" method="POST">
+    <form class="mt-8 space-y-6" action="#" method="POST" @submit.prevent="login">
       <input type="hidden" name="remember" value="true" />
       <div class="rounded-md shadow-sm -space-y-px">
         <div>
@@ -13,6 +13,7 @@
             required=""
             class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
             placeholder="Email address"
+            v-model="user.email"
           />
         </div>
         <div>
@@ -25,6 +26,7 @@
             required=""
             class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
             placeholder="Password"
+            v-model="user.password"
           />
         </div>
       </div>
@@ -35,6 +37,7 @@
             id="remember-me"
             name="remember-me"
             type="checkbox"
+            v-model="user.remember"
             class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
           />
           <label for="remember-me" class="ml-2 block text-sm text-gray-900">
@@ -71,6 +74,33 @@
 </template>
 
 <script setup>
-import { LockClosedIcon } from "@heroicons/vue/solid";
+import {ref} from 'vue'
+import {LockClosedIcon} from '@heroicons/vue/solid'
 import GuestLayout from "../components/GuestLayout.vue";
+import store from "../store";
+import router from "../router";
+
+let loading = ref(false);
+let errorMsg = ref("");
+
+const user = {
+  email: '',
+  password: '',
+  remember: false
+}
+
+function login() {
+  loading.value = true;
+
+
+  store.dispatch('login', user)
+    .then(() => {
+      loading.value = false;
+      router.push({name: 'app.dashboard'})
+    })
+    .catch(({response}) => {
+      loading.value = false;
+      errorMsg.value = response.data.message;
+    })
+}
 </script>
