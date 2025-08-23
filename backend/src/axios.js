@@ -32,8 +32,8 @@ axiosClient.interceptors.response.use(response => {
         sessionStorage.removeItem('TOKEN')
         router.push({ name: 'login' })
     }
-    // throw error;
-    console.error(error);
+    throw error;
+    // console.error(error);
 })
 
 

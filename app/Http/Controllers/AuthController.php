@@ -46,6 +46,8 @@ class AuthController extends Controller
 
 
         $token = $user->createToken('main')->plainTextToken;
+
+        // saat login langsung simpan data user pada resource
         return response([
             'user' => new UserResource($user),
             'token' => $token
@@ -62,8 +64,11 @@ class AuthController extends Controller
         return response('', 204);
     }
 
-    // public function getUser(Request $request)
-    // {
-    //     return new UserResource($request->user());
-    // }
+
+// memanggil data user yang tersimpan dalam resource
+    public function getUser(Request $request)
+    {
+        return new UserResource($request->user());
+
+    }
 }

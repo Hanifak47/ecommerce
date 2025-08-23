@@ -12,7 +12,7 @@
           src="https://randomuser.me/api/portraits/men/4.jpg"
           class="rounded-full w-8 mr-2"
         />
-        <small>Hanif Jenksin</small>
+        <small>{{ currentUser.name }}</small>
         <ChevronDownIcon
           class="-mr-1 ml-2 h-5 w-5 text-violet-200 hover:text-violet-100"
           aria-hidden="true"
@@ -73,8 +73,17 @@
 import { MenuIcon, LogoutIcon, UserIcon } from "@heroicons/vue/outline";
 import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/vue";
 import { ChevronDownIcon } from "@heroicons/vue/solid";
+import { useRouter } from "vue-router";
+import { computed } from "vue";
+
 import store from "../store";
-import router from "../router";
+// import router from "../router";
+
+// menggunakan router
+const router = useRouter();
+
+// mengambil
+const currentUser = computed(() => store.state.user.data);
 
 const emit = defineEmits(["toggle-sidebar"]);
 
@@ -83,7 +92,6 @@ function logout() {
     router.push({ name: "login" });
   });
 }
-
 
 // function logout() {
 //     // Dispatch aksi logout
