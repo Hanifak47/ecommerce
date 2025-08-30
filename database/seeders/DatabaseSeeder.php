@@ -6,6 +6,7 @@ use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
+
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -13,11 +14,16 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        $this->call([
+            AdminuserSeeder::class,
+            ProductSeeder::class
+        ]);
+
         // User::factory(10)->create();
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        // User::factory()->create([ // phpcs:ignore PEAR.Functions.FunctionCallSignature.ContentAfterOpenBracket
+        //     'name' => 'Test User',
+        //     'email' => 'test@example.com',
+        // ]); // phpcs:ignore PEAR.Functions.FunctionCallSignature.CloseBracketLine
     }
 }

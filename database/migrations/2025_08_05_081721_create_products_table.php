@@ -5,14 +5,13 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
     public function up(): void
     {
-        Schema::create('products', function (Blueprint $table) {
+        Schema::create('products', function (Blueprint $table) { // phpcs:ignore PEAR.Functions.FunctionCallSignature.ContentAfterOpenBracket, Generic.Files.LineLength.MaxExceeded
             $table->id();
 
             $table->string('title', 2000);
@@ -22,7 +21,7 @@ return new class extends Migration
             $table->integer('image_size')->nullable();
             $table->longText('description')->nullable();
 
-            $table->decimal('price', 10, 2);
+            $table->integer('price', false, true);
 
 
             $table->foreignIdFor(User::class, 'created_by')->nullable();
@@ -33,7 +32,7 @@ return new class extends Migration
             $table->foreignIdFor(User::class, 'deleted_by')->nullable();
 
             $table->timestamps();
-        });
+        }); // phpcs:ignore PEAR.Functions.FunctionCallSignature.CloseBracketLine
     }
 
     /**

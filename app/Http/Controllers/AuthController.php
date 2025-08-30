@@ -18,14 +18,14 @@ class AuthController extends Controller
         // dd("joss banget gutys");
 
         $credentials = $request->validate([
-            'email'=> ['required', 'email'],
+            'email' => ['required', 'email'],
             'password' => 'required',
             'remember' => 'boolean'
         ]);
         $remember = $credentials['remember'] ?? false;
-        
+
         unset($credentials['remember']);
-// dd("josssss");
+        // dd("josssss");
 
         if (!Auth::attempt($credentials, $remember)) {
             return response([
@@ -35,7 +35,7 @@ class AuthController extends Controller
 
         /** @var \App\Models\User $user */
         $user = Auth::user();
-        
+
         // dd('berhasil');
         if (!$user->is_admin) {
             Auth::logout();
@@ -65,7 +65,7 @@ class AuthController extends Controller
     }
 
 
-// memanggil data user yang tersimpan dalam resource
+    // memanggil data user yang tersimpan dalam resource
     public function getUser(Request $request)
     {
         return new UserResource($request->user());
