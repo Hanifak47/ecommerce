@@ -7,7 +7,14 @@ const state = {
     },
     products: {
         loading: false,
-        data: []
+        data: [],
+        // seksi mengenai paginasi
+        links: [],
+        from: null,
+        to: null,
+        page: 1,
+        limit: null,
+        total: null
     }
 }
 

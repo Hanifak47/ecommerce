@@ -1,4 +1,5 @@
 <template>
+  <!-- jika  -->
   <div v-if="currentUser.id" class="min-h-screen bg-gray-200 flex">
     <!-- jika sidebar tetrtutup maka class margin left 200px akan dieksekusi -->
     <Sidebar :class="{ '-ml-[200px]': !sideBarOpened }" />
@@ -45,6 +46,7 @@ function updateSidebarState() {
 }
 
 // pengaturan saat ukuran diresize menghilangkan sidebar atau tidak menghilangkannya
+// saat pertama kali halaman ini di load
 onMounted(() => {
   // memanggil gunakan method getuser dari store action
   store.dispatch("getUser");

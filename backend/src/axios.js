@@ -12,13 +12,11 @@ const axiosClient = axios.create({
     baseURL: import.meta.env.VITE_API_BASE_URL + "/api",
 });
 
-
 // setiap request maka perlu di intersep apakah ada tokenya atau tidak, jika ada token dianggap sudah terotorisasi
 axiosClient.interceptors.request.use(config => {
     config.headers.Authorization = `Bearer ${store.state.user.token}`
     return config;
-})
-
+});
 
 // seteiap tequest perlu diintersep jika tidak ada tokenya maka belum login, dan akan dikembalikan ke menu login
 // ini yang ori dari tutor
@@ -34,8 +32,6 @@ axiosClient.interceptors.response.use(response => {
     }
     throw error;
     // console.error(error);
-})
-
-
+});
 
 export default axiosClient;

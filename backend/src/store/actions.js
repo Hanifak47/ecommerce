@@ -67,11 +67,17 @@ export function logout({ commit }) {
         });
 }
 
-export function getProducts({ commit }) {
+// commit digunakan untuk set data dari set product
+export function getProducts({ commit }, { url = null }) {
     // ini menggunakan mutationnya, true disini adalah loadingnya
+    // awalnya set product memiliki nilai loading true
     commit('setProducts', [true])
     // arahkan ke routes resources agar 
-    return axiosClient.get('/product')
+
+    // atur nial url sesuai url pada parameter, jika url pada parameter bernilai null maka nilailnyab adalah /product 
+    url = url || '/product';
+
+    return axiosClient.get(url)
         // res = response, berisikan data dan metadata dari server
         // debugger;
         .then(res => {
