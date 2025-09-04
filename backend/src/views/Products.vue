@@ -1,7 +1,7 @@
 <template>
   <!-- <pre>{{ products }}</pre> -->
   <div class="flex items-center justify-between mb-3">
-    <h1 class="text-3xl font-semibold">Products</h1>
+    <h1 class="text-3xl font-semibold">Produk</h1>
     <!-- tombo tambah -->
     <button type="submit"
       class="py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
@@ -13,7 +13,7 @@
   <div class="bg-white p-4 rounded-lg shadow">
     <div class="flex justify-between border-b-2 pb-3">
       <div class="flex items-center">
-        <span class="whitespace-nowrap mr-3">Per Page</span>
+        <span class="whitespace-nowrap mr-3">Per Halaman</span>
 
         <select @change="getProducts(null)" v-model="perPage"
           class="appearance-none relative block w-24 px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm">
@@ -26,8 +26,8 @@
       </div>
       <div>
         <input v-model="search" @change="getProducts(null)"
-          class="appearance-none relative block w-24 px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-          placeholder="Type to Search products" />
+          class="appearance-none relative block w-100 px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+          placeholder="Cari by nama, deskripsi" />
       </div>
     </div>
 
@@ -37,30 +37,39 @@
       <table class="table-auto w-full">
         <thead>
           <tr>
-            <th class="border-b-2 p-2 text-left">ID</th>
+            <th class="border-b-2 p-2 text-left">No.</th>
             <th class="border-b-2 p-2 text-left">Gambar</th>
             <th class="border-b-2 p-2 text-left">Nama</th>
             <th class="border-b-2 p-2 text-left">Harga</th>
             <th class="border-b-2 p-2 text-left">Terakhir Diupdate</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody v-if="products.data.length > 0">
           <tr v-for="product in products.data" :key="product.id"
             class="odd:bg-gray-100 even:bg-white hover:bg-black/30">
-            <td class="border-b p-2">{{ product.id }}</td>
+            <td class="border-b p-2">{{ no++ }}</td>
             <td class="border-b p-2">
               <img class="w-16" :src="product.image" :alt="product.title" />
             </td>
             <td class="border-b p-2 max-w-[200px] whitespace-nowrap overflow-hidden text-ellipsis">{{ product.title }}
             </td>
             <td class="border-b p-2">{{ toRupiah(product.price) }}</td>
-            <td class="border-b p-2">{{ product.updated_at }}</td>
+            <td class="border-b p-2">{{ formatTanggal(product.updated_at) }}</td>
+          </tr>
+        </tbody>
+        <tbody v-else>
+          <tr>
+            <td colspan="5" class="text-center py-4">
+              <img src="/img/empty.png" alt="Data Tidak Ditemukan" class="mx-auto"
+                style="max-width: 200px; display: block;">
+            </td>
+            <!-- <td colspan="5" class="text-center py-4">Data tidak tersedia.</td> -->
           </tr>
         </tbody>
       </table>
 
       <!-- ini adalah paginationnya -->
-      <div class="flex justify-between items-center mt-5">
+      <div v-if="products.data.length > 0" class="flex justify-between items-center mt-5">
         <span>
           showing from {{ products.from }} to {{ products.to }}
         </span>
@@ -100,12 +109,16 @@
 import { computed, onMounted, ref } from 'vue';
 import store from "../store/index.js";
 import { PRODUCT_PER_PAGE } from '../constant.js';
-import { toRupiah } from '../helpers/bantuan.js';
+import { toRupiah, formatTanggal } from '../helpers/bantuan.js';
+
+let no = 1;
 
 // lihat pada backend/src/constant
 const perPage = ref(PRODUCT_PER_PAGE)
 // const perPage = 25
 const search = ref('')
+
+// console.log(perPage);
 
 // fungsi yang dijalankan saat pertama kali halaman ini di render
 onMounted(() => {
@@ -114,7 +127,13 @@ onMounted(() => {
 
 // lihat fungsi pada store action dispatch digunakan untuk mengeksekusi function
 function getProducts(url = null) {
-  store.dispatch('getProducts', { url })
+  store.dispatch('getProducts',
+    {
+      url,
+      search: search.value,
+      perPage: perPage.value
+    })
+  no = 1;
 }
 
 // menggunakan state products (global state), ini memuat seluruh data product, karena sudah di onmounted maka data ini akan ada
@@ -126,6 +145,7 @@ function getForPage(ev, link) {
     ev.preventDefault();
   }
   getProducts(link.url);
+  no = 1;
 }
 
 </script>

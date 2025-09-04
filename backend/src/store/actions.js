@@ -1,6 +1,8 @@
 // ini adalah API yang menjembatani antara backend dengan frontend
 
 import axiosClient from "../axios";
+import { PRODUCT_PER_PAGE } from '../constant.js';
+
 
 // export function getUser({ commit }, data) {
 //     return axiosClient.get('/user', data)
@@ -68,7 +70,13 @@ export function logout({ commit }) {
 }
 
 // commit digunakan untuk set data dari set product
-export function getProducts({ commit }, { url = null }) {
+// parameter ini diperoleh dari view
+export function getProducts({ commit }, { url = null, search = '', perPage = PRODUCT_PER_PAGE }) {
+
+    // console.log(perPage);
+    // console.log(search);
+
+
     // ini menggunakan mutationnya, true disini adalah loadingnya
     // awalnya set product memiliki nilai loading true
     commit('setProducts', [true])
@@ -77,7 +85,10 @@ export function getProducts({ commit }, { url = null }) {
     // atur nial url sesuai url pada parameter, jika url pada parameter bernilai null maka nilailnyab adalah /product 
     url = url || '/product';
 
-    return axiosClient.get(url)
+    // parameter tersebut dikirim ke kontroler melalui routes api
+    return axiosClient.get(url, {
+        params: { search, per_page: perPage }
+    })
         // res = response, berisikan data dan metadata dari server
         // debugger;
         .then(res => {

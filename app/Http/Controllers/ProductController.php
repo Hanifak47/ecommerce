@@ -25,9 +25,22 @@ class ProductController extends Controller
         //     'data_yang_dicek' => ProductListResource::collection(Product::query()->paginate(10))
         // ], 200); // phpcs:ignore PEAR.Functions.FunctionCallSignature.CloseBracketLine
 
+        // Ambil nilai 'per_page' dari request, gunakan nilai default 10 jika tidak ada
+        $perPage = request('per_page', 10);
 
+        // Ambil nilai 'search' dari request
+        $search = request('search', false);
 
-        return ProductListResource::collection(Product::query()->paginate(10));
+        // Mulai query
+        $query = Product::query();
+
+        // Jika ada nilai 'search', tambahkan kondisi pencarian
+        if ($search) {
+            $query->where('title', 'like', "%{$search}%")
+                ->orWhere('description', 'like', "%{$search}%");
+        }
+
+        return ProductListResource::collection($query->paginate($perPage));
 
     }
 
