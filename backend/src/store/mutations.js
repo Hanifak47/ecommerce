@@ -16,6 +16,7 @@ export function setToken(state, token) {
 }
 
 // kelola data loading dan product (setter) set product ini terset pada action js terutama pada method get product
+// meta, meta tersebut berasal dari controller prodduct karena mengembalikan response pagination, jadi ada atribut seperti link, total, per_page dll
 export function setProducts(state, [loading, response = null]) {
   if (response) {
     state.products = {

@@ -31,8 +31,15 @@ class ProductController extends Controller
         // Ambil nilai 'search' dari request
         $search = request('search', false);
 
+
+        $sortField = request('sort_field', 'updated_at');
+
+        $sortDirection = request('sort_direction', 'desc');
+
         // Mulai query
         $query = Product::query();
+
+        $query->orderBy($sortField, $sortDirection);
 
         // Jika ada nilai 'search', tambahkan kondisi pencarian
         if ($search) {
@@ -40,6 +47,7 @@ class ProductController extends Controller
                 ->orWhere('description', 'like', "%{$search}%");
         }
 
+        // dengan paginate ini otomatis mengembalikan nilai meta dsb
         return ProductListResource::collection($query->paginate($perPage));
 
     }

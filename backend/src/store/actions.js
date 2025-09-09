@@ -71,7 +71,7 @@ export function logout({ commit }) {
 
 // commit digunakan untuk set data dari set product
 // parameter ini diperoleh dari view
-export function getProducts({ commit }, { url = null, search = '', perPage = PRODUCT_PER_PAGE }) {
+export function getProducts({ commit }, { url = null, search = '', perPage = PRODUCT_PER_PAGE, sort_field, sort_direction }) {
 
     // console.log(perPage);
     // console.log(search);
@@ -87,7 +87,12 @@ export function getProducts({ commit }, { url = null, search = '', perPage = PRO
 
     // parameter tersebut dikirim ke kontroler melalui routes api
     return axiosClient.get(url, {
-        params: { search, per_page: perPage }
+        params: {
+            search,
+            per_page: perPage,
+            sort_field,
+            sort_direction
+        }
     })
         // res = response, berisikan data dan metadata dari server
         // debugger;
