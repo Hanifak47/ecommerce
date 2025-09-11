@@ -12,7 +12,8 @@
   <!-- v-model ini sama seperti gabungan antara binding 1 arah dari induk ke anak atau mendegarkan event dari anak ke induk -->
   <!-- show modal bernilai false by default -->
   <!-- shoow mdoal bernilai true hanya jika showproduct modal di klik -->
-  <ProductsModal v-model="showModal" />
+  <!-- Product modal ini mengirimkan properties prodcut model -->
+  <ProductsModal v-model="showModal" :product="productModel" />
   <ProductsTable />
 
 </template>
@@ -26,11 +27,20 @@ import { ref } from "vue";
 // value awal adalah salah, alias by default modal terututp
 const showModal = ref(false);
 
+// by default product model nilainya kosong
+const productModel = ref({
+  id: '',
+  title: '',
+  image: '',
+  description: '',
+  price: '',
+})
+
+
 // jika klik maka show modal bernilai true
 function showProductModal() {
   showModal.value = true;
 }
-
 
 </script>
 
