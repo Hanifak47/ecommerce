@@ -16,11 +16,14 @@
                         leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
                         <DialogPanel
                             class="relative bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:max-w-[700px] sm:w-full">
+                            <!-- loading dieksekusi dulu sebelum bawahyna di eksekusi  -->
                             <Spinner v-if="loading"
                                 class="absolute left-0 top-0 bg-white right-0 bottom-0 flex items-center justify-center" />
                             <header class="py-3 px-4 flex justify-between items-center">
+
+                                <!-- Produk ini berasal dari prop yang diterima dari view produk -->
                                 <DialogTitle as="h3" class="text-lg leading-6 font-medium text-gray-900">
-                                    {{ product.id ? `Update product: "${props.product.title}"` : 'Create new Product' }}
+                                    {{ product.id ? `Ubah Produk: "${props.product.title}"` : 'Tambahkan Produk' }}
                                 </DialogTitle>
                                 <button @click="closeModal()"
                                     class="w-8 h-8 flex items-center justify-center rounded-full transition-colors cursor-pointer hover:bg-[rgba(0,0,0,0.2)]">

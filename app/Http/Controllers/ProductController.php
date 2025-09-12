@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\ProductResource;
 use App\Models\Product;
-use App\Http\Requests\ProductRequest;
-use App\Http\Resources\ProductListResource;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\URL;
 
 // gunakan use di bawa untuk debugging
-use Illuminate\Support\Facades\Log;
+use App\Http\Requests\ProductRequest;
+use App\Http\Resources\ProductResource;
+use Illuminate\Support\Facades\Storage;
+use App\Http\Resources\ProductListResource;
 
 class ProductController extends Controller
 {
@@ -57,8 +60,25 @@ class ProductController extends Controller
      */
     public function store(ProductRequest $request)
     {
+        $data = $request->validated();
+        $data['created_by'] = $request->user()->id;
+        $data['updated_by'] = $request->user()->id;
+
+        /** @var \Illuminate\Http\UploadedFile $image */
+        // niali dari gambar adalah image sedangakan jik tidak ada maka bernilai null
+        $image = $data['image'] ?? null;
+        // jika data yg disimpan ada gambaranya
+        if ($image) {
+            $relativePath = $this->saveImage($image);
+            $data['image'] = URL::to(Storage::url($relativePath));
+            $data['image_mime'] = $image->getClientMimeType();
+            $data['image_size'] = $image->getSize();
+        }
+
+        $product = Product::create($data);
+
         //
-        return new ProductResource(Product::create($request->validate()));
+        return new ProductResource($product);
     }
 
     /**
@@ -88,5 +108,34 @@ class ProductController extends Controller
         //
         $product->delete();
         return response()->noContent();
+    }
+
+    // private function saveImage(\Illuminate\Http\UploadedFile $image)
+    // {
+    //     $path = 'images/' . Str::random();
+
+    //     if (!Storage::exists($path)) {
+    //         Storage::makeDirectory($path, 0755, true);
+    //     }
+
+    //     if (!Storage::putFileAs('public/' . $path, $image, $image->getClientOriginalName())) {
+    //         throw new \Exception(message: "Unable to save file \"{$image->getClientOriginalName()}\"");
+    //     }
+
+    //     return $path . '/' . $image->getClientOriginalName();
+    // }
+
+    private function saveImage(\Illuminate\Http\UploadedFile $image)
+    {
+        // Cukup gunakan putFileAs untuk menyimpan file.
+        // Metode ini akan otomatis membuat direktori jika belum ada.
+        $path = 'public/images';
+        $name = Str::random(40) . '.' . $image->getClientOriginalExtension();
+
+        // Simpan file dengan nama unik ke dalam direktori 'public/images'
+        $imagePath = $image->storeAs($path, $name);
+
+        // Kembalikan path relatif dari 'storage/app'
+        return str_replace('public/', '', $imagePath);
     }
 }

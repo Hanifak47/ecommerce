@@ -16,6 +16,13 @@ class Product extends Model
     use HasSlug;
     use SoftDeletes;
 
+    protected $fillable = [ // phpcs:ignore Zend.NamingConventions.ValidVariableName.PrivateNoUnderscore
+        'title',
+        'description',
+        'price',
+        'image',
+        'image_mime',
+    ];
 
     public function getSlugOptions(): SlugOptions
     {
