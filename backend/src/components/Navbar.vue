@@ -59,7 +59,6 @@ const router = useRouter();
 // mengambil
 const currentUser = computed(() => store.state.user.data);
 
-const emit = defineEmits(["toggle-sidebar"]);
 
 // jalankan action.js terutama fungsi logout, jika selesah redirect ke action .js login
 function logout() {

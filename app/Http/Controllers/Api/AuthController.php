@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,7 +18,7 @@ class AuthController extends Controller
 
         // dd("joss banget gutys");
 
-        $credentials = $request->validate([
+        $credentials = $request->validate([ // phpcs:ignore PEAR.Functions.FunctionCallSignature.ContentAfterOpenBracket
             'email' => ['required', 'email'],
             'password' => 'required',
             'remember' => 'boolean'
@@ -37,9 +38,9 @@ class AuthController extends Controller
         $user = Auth::user();
 
         // dd('berhasil');
-        if (!$user->is_admin) {
+        if (!$user->is_admin) { // phpcs:ignore Zend.NamingConventions.ValidVariableName.NotCamelCaps
             Auth::logout();
-            return response([
+            return response([ // phpcs:ignore PEAR.Functions.FunctionCallSignature.ContentAfterOpenBracket
                 'message' => 'You don\'t have permission to authenticate as admin'
             ], 403);
         }
@@ -48,7 +49,7 @@ class AuthController extends Controller
         $token = $user->createToken('main')->plainTextToken;
 
         // saat login langsung simpan data user pada resource
-        return response([
+        return response([ // phpcs:ignore PEAR.Functions.FunctionCallSignature.ContentAfterOpenBracket
             'user' => new UserResource($user),
             'token' => $token
         ]);

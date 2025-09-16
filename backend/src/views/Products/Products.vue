@@ -13,33 +13,49 @@
   <!-- show modal bernilai false by default -->
   <!-- shoow mdoal bernilai true hanya jika showproduct modal di klik -->
   <!-- Product modal ini mengirimkan properties prodcut model -->
-  <ProductsModal v-model="showModal" :product="productModel" />
-  <ProductsTable />
+  <ProductsModal v-model="showModal" :product="productModel" @close="onModalClose" />
+  <ProductsTable @clickEdit="editProduct" />
 
 </template>
 
 <script setup>
 import ProductsModal from './ProductsModal.vue';
 import ProductsTable from './ProductsTable.vue';
+import store from "../../store/index.js";
 import { ref } from "vue";
 
 
-// value awal adalah salah, alias by default modal terututp
-const showModal = ref(false);
-
-// by default product model nilainya kosong
-const productModel = ref({
+// ini adalah empty objek digunakan untuk reset modal
+const DEFAULT_EMPTY_OBJECT = {
   id: '',
   title: '',
   image: '',
   description: '',
   price: '',
-})
+}
+
+// value awal adalah salah, alias by default modal terututp
+const showModal = ref(false);
+
+// by default product model nilainya kosong
+const productModel = ref({ ...DEFAULT_EMPTY_OBJECT })
 
 
 // jika klik maka show modal bernilai true
 function showProductModal() {
   showModal.value = true;
+}
+
+function editProduct(product) {
+  store.dispatch('getProduct', product.id)
+    .then(({ data }) => {
+      productModel.value = data
+      showProductModal()
+    })
+}
+
+function onModalClose() {
+  productModel.value = { ...DEFAULT_EMPTY_OBJECT }
 }
 
 </script>

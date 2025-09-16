@@ -35,6 +35,7 @@
 
 import { computed } from "vue";
 
+// menerima data 
 const props = defineProps({
     modelValue: [String, Number, File],
     label: String,
@@ -70,7 +71,8 @@ const inputClasses = computed(() => {
     return cls.join(' ')
 })
 
-// pendefinisian emit saat model dipanggil dan saat tmapil di browser
+// pendefinisian emit saat model dipanggil dan saat tmapil di browseru
+// upate model value untuk menunjukkan perubahan value dari sebuah modal, change khusus jika inputnanya adalah file
 const emit = defineEmits(['update:modelValue', 'change'])
 
 </script>

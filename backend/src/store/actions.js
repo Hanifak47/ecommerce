@@ -71,7 +71,8 @@ export function logout({ commit }) {
 
 // commit digunakan untuk set data dari set product
 // parameter ini diperoleh dari view
-export function getProducts({ commit }, { url = null, search = '', perPage = PRODUCT_PER_PAGE, sort_field, sort_direction }) {
+// jika ada isinya maka ada isinya jika tidak ya kosong (untuk parameter ke 2)
+export function getProducts({ commit }, { url = null, search = '', perPage = PRODUCT_PER_PAGE, sort_field, sort_direction } = {}) {
 
     // console.log(perPage);
     // console.log(search);
@@ -109,7 +110,7 @@ export function createProduct({ commit }, product) {
     if (product.image instanceof File) {
         // buat objek form baru
         const form = new FormData();
-        
+
         form.append('title', product.title);
         form.append('image', product.image);
         form.append('description', product.description);
@@ -120,23 +121,80 @@ export function createProduct({ commit }, product) {
     return axiosClient.post('/products', product)
 }
 
+// update produk
+// export function updateProduct({ commit }, product) {
+//     const id = product.id
+//     // console.log(product)
+//     // debugger
+//     if (product.image instanceof File) {
+//         const form = new FormData();
+//         form.append('id', product.id);
+//         form.append('title', product.title);
+//         form.append('image', product.image);
+//         form.append('description', product.description);
+//         form.append('price', product.price);
+//         form.append('_method', 'PUT');
+//         product = form;
+//     }
+//     // console.log(product)
+//     // debugger
+//     return axiosClient.post(`/products/${id}`, product)
+// }
+
+
 export function updateProduct({ commit }, product) {
-    const id = product.id
+    // set idnya
+    const id = product.id;
+
     if (product.image instanceof File) {
+        // buat form data baru
         const form = new FormData();
         form.append('id', product.id);
-        form.append('title', product.title);
         form.append('title', product.title);
         form.append('image', product.image);
         form.append('description', product.description);
         form.append('price', product.price);
         form.append('_method', 'PUT');
-        product = form;
-    } else {
-        product._method = 'PUT'
-    }
 
-    return axiosClient.post('/products/${id}', product)
+        // Return the request with the 'form' variable and the correct headers
+        return axiosClient.post(`/products/${id}`, form, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        });
+
+    } else {
+        // If no image is updated, send as JSON (PUT method is fine here)
+        return axiosClient.put(`/products/${id}`, product);
+    }
+}
+
+// export function updateProduct({ commit }, product) {
+//     const id = product.id
+//     const form = new FormData()
+//     form.append('title', product.title)
+//     form.append('description', product.description)
+//     form.append('price', product.price)
+//     if (product.image instanceof File) {
+//         form.append('image', product.image)
+//     }
+//     form.append('_method', 'PUT')
+
+//     console.log(form)
+//     debugger
+
+//     return axiosClient.post(`/products/${id}`, form) // JANGAN .put
+// }
+
+
+// hapus produk
+export function deleteProduct({ commit }, id) {
+    return axiosClient.delete(`/products/${id}`)
+}
+
+// dapatkan 1 product saja 
+export function getProduct({ commit }, id) {
+    return axiosClient.get(`/products/${id}`)
 }
 
 

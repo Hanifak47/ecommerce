@@ -23,7 +23,8 @@
 
                                 <!-- Produk ini berasal dari prop yang diterima dari view produk -->
                                 <DialogTitle as="h3" class="text-lg leading-6 font-medium text-gray-900">
-                                    {{ product.id ? `Ubah Produk: "${props.product.title}"` : 'Tambahkan Produk' }}
+                                    <!-- jika ada didnya maka ubah jika tidak maka tambah -->
+                                    {{ product.id ? `Ubah Produk` : 'Tambahkan Produk' }}
                                 </DialogTitle>
                                 <button @click="closeModal()"
                                     class="w-8 h-8 flex items-center justify-center rounded-full transition-colors cursor-pointer hover:bg-[rgba(0,0,0,0.2)]">
