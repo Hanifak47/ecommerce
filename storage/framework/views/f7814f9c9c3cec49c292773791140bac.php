@@ -32,4 +32,10 @@ unset($__defined_vars); ?>
     <?php echo e($value ?? $slot); ?>
 
 </label>
-<?php /**PATH C:\Users\62812\Documents\LARAVEL FUNDAMENTAL\laravel vue ecommerce\ecommerce\resources\views/components/input-label.blade.php ENDPATH**/ ?>
+
+
+
+<!-- <label <?php echo e($attributes->merge(['class' => 'border-gray-300 focus:border-purple-500 focus:outline-none focus:ring-purple-500 rounded-md w-full'])); ?>>
+    <?php echo e($value ?? $slot); ?>
+
+</label> --><?php /**PATH C:\Users\62812\Documents\LARAVEL FUNDAMENTAL\laravel vue ecommerce\ecommerce\resources\views/components/input-label.blade.php ENDPATH**/ ?>
