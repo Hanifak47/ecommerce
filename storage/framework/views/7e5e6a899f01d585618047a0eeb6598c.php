@@ -1,3 +1,5 @@
+<!-- x-TAG BERASAL DARI LARAVEL BREEZE dari folder component -->
+<!-- route berasal dari auth -->
 <?php if (isset($component)) { $__componentOriginal9ac128a9029c0e4701924bd2d73d7f54 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal9ac128a9029c0e4701924bd2d73d7f54 = $attributes; } ?>
 <?php $component = App\View\Components\AppLayout::resolve([] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
@@ -15,8 +17,7 @@
         </h2>
         <p class="text-center text-gray-500 mb-6">
             or
-            <a href="<?php echo e(route('register')); ?>" class="text-sm text-purple-700 hover:text-purple-600">create new
-                account</a>
+            <a href="<?php echo e(route('register')); ?>" class="text-sm text-purple-700 hover:text-purple-600">Buat akun baru</a>
         </p>
 
         <!-- <?php if (isset($component)) { $__componentOriginal2b69d11700a460ba33b4cb32b89080b7 = $component; } ?>
@@ -43,14 +44,14 @@
         <div class="mb-4">
             <?php if (isset($component)) { $__componentOriginalc2fcfa88dc54fee60e0757a7e0572df1 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginalc2fcfa88dc54fee60e0757a7e0572df1 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input','data' => ['id' => 'loginEmail','type' => 'email','name' => 'email','value' => ''.e(old('email')).'','placeholder' => 'Your email address']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input','data' => ['id' => 'loginEmail','type' => 'email','name' => 'email','value' => old('email'),'errors' => $errors,'placeholder' => 'Alamat email']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('input'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['id' => 'loginEmail','type' => 'email','name' => 'email','value' => ''.e(old('email')).'','placeholder' => 'Your email address']); ?>
+<?php $component->withAttributes(['id' => 'loginEmail','type' => 'email','name' => 'email','value' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(old('email')),'errors' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute($errors),'placeholder' => 'Alamat email']); ?>
 <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginalc2fcfa88dc54fee60e0757a7e0572df1)): ?>
@@ -62,17 +63,18 @@
 <?php unset($__componentOriginalc2fcfa88dc54fee60e0757a7e0572df1); ?>
 <?php endif; ?>
         </div>
+
         <div class="mb-4">
             <?php if (isset($component)) { $__componentOriginalc2fcfa88dc54fee60e0757a7e0572df1 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginalc2fcfa88dc54fee60e0757a7e0572df1 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input','data' => ['id' => 'loginPassword','type' => 'password','name' => 'password','placeholder' => 'Your password']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input','data' => ['id' => 'loginPassword','type' => 'password','name' => 'password','placeholder' => 'Password']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('input'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['id' => 'loginPassword','type' => 'password','name' => 'password','placeholder' => 'Your password']); ?>
+<?php $component->withAttributes(['id' => 'loginPassword','type' => 'password','name' => 'password','placeholder' => 'Password']); ?>
 <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginalc2fcfa88dc54fee60e0757a7e0572df1)): ?>
@@ -87,18 +89,17 @@
 
         <div class="flex justify-between items-center mb-5">
             <div class="flex items-center">
-                <input name="remember" id="loginRememberMe" type="checkbox"
+                <input id="loginRememberMe" type="checkbox" name="remember"
                     class="mr-3 rounded border-gray-300 text-purple-500 focus:ring-purple-500" />
-                <label for="loginRememberMe">Remember Me</label>
+                <label for="loginRememberMe">Ingat saya</label>
             </div>
-            <a href="<?php echo e(route('password.request')); ?>" class="text-sm text-purple-700 hover:text-purple-600">Forgot
-                Password?</a>
+            <a href="<?php echo e(route('password.request')); ?>" class="text-sm text-purple-700 hover:text-purple-600">Lupa password</a>
         </div>
         <button class="btn-primary bg-emerald-500 hover:bg-emerald-600 active:bg-emerald-700 w-full">
             Login
         </button>
-
     </form>
+
  <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginal9ac128a9029c0e4701924bd2d73d7f54)): ?>
