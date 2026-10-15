@@ -58,9 +58,19 @@
                 </tr>
             </tbody>
             <tbody v-if="products.data.length > 0 && !products.loading">
-                <tr v-for="(product, index) of products.data" :key="product.id"
+                <!-- <tr v-for="(product, index) of products.data" :key="product.id"
                     class="odd:bg-gray-100 even:bg-white hover:bg-black/30 animate-fade-in-down"
-                    :style="{ 'animation-delay': `${index * 0.05}s` }">
+                    :style="{ 'animation-delay': `${index * 0.05}s` }"> -->
+
+
+                <tr v-for="(product, index) of products.data" :key="product.id"
+                    class="odd:bg-gray-100 even:bg-white hover:bg-black/30 animate-fade-in-down" :style="{
+                        'animation-delay': `${index * 0.05}s`,
+                        'animation-fill-mode': 'backwards'
+                    }">
+
+
+
                     <td class=" border-b p-2">{{ product.id }}</td>
                     <td class="border-b p-2">
                         <img class="w-16" :src="product.image_url" :alt="product.title" />
@@ -95,24 +105,24 @@
                                         <!-- v-slot ini mennyisipkan sifat kedalam atribut menu item , active berupa false dan true tertrigger ketika user hover ke bjek tersebut -->
                                         <!-- ketika ditekan akan trigger method oncliknya -->
                                         <MenuItem v-slot="{ active }">
-                                        <button :class="[
-                                            active ? 'bg-indigo-600 text-white' : 'text-gray-900',
-                                            'group flex w-full items-center rounded-md px-2 py-2 text-sm',
-                                        ]" @click="editProduct(product)">
-                                            <PencilIcon :active="active" class="mr-2 h-5 w-5 text-indigo-400"
-                                                aria-hidden="true" />
-                                            Edit
-                                        </button>
+                                            <button :class="[
+                                                active ? 'bg-indigo-600 text-white' : 'text-gray-900',
+                                                'group flex w-full items-center rounded-md px-2 py-2 text-sm',
+                                            ]" @click="editProduct(product)">
+                                                <PencilIcon :active="active" class="mr-2 h-5 w-5 text-indigo-400"
+                                                    aria-hidden="true" />
+                                                Edit
+                                            </button>
                                         </MenuItem>
                                         <MenuItem v-slot="{ active }">
-                                        <button :class="[
-                                            active ? 'bg-indigo-600 text-white' : 'text-gray-900',
-                                            'group flex w-full items-center rounded-md px-2 py-2 text-sm',
-                                        ]" @click="deleteProduct(product)">
-                                            <TrashIcon :active="active" class="mr-2 h-5 w-5 text-indigo-400"
-                                                aria-hidden="true" />
-                                            Delete
-                                        </button>
+                                            <button :class="[
+                                                active ? 'bg-indigo-600 text-white' : 'text-gray-900',
+                                                'group flex w-full items-center rounded-md px-2 py-2 text-sm',
+                                            ]" @click="deleteProduct(product)">
+                                                <TrashIcon :active="active" class="mr-2 h-5 w-5 text-indigo-400"
+                                                    aria-hidden="true" />
+                                                Delete
+                                            </button>
                                         </MenuItem>
                                     </div>
                                 </MenuItems>
