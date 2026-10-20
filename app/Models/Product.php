@@ -31,5 +31,11 @@ class Product extends Model
             ->saveSlugsTo('slug');
     }
 
+    // dapatkan slug di tabel product
+    public function getRouteKeyname()
+    {
+        return 'slug';
+    }
+
 
 }
